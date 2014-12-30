@@ -7,8 +7,6 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;
 
 public class BuyFlowerPots extends Task <ClientContext> {
-
-	public static final int POT_OF_FLOUR_ID = 1933;
 	
 	public BuyFlowerPots(ClientContext ctx) {
 		super(ctx);
@@ -24,15 +22,18 @@ public class BuyFlowerPots extends Task <ClientContext> {
 		FlourRunner.state = "Buying Flower Pots";
 		
 		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
-		final int potOfFlourCountBefore = ctx.backpack.select().id(POT_OF_FLOUR_ID).count();
+		ctx.backpack.select().id(ItemIds.POT_OF_FLOUR);
+		final int potOfFlourCountBefore = ctx.backpack.count();
 		potOfFlour.interact(false, "Buy All", "Pot of flour");
+		
+//		Wait until we've bought the pot of flowers.
 		Condition.wait(new Callable<Boolean>() {
 			
 			public Boolean call() throws Exception {
-				return ctx.backpack.select().id(POT_OF_FLOUR_ID).count() > potOfFlourCountBefore;
+				ctx.backpack.select().id(ItemIds.POT_OF_FLOUR);
+				return ctx.backpack.count() > potOfFlourCountBefore;
 			}
 		}, 200, 10);
-		
 		
 		int purchased = FlourRunner.potsOfFloursPurchased;
 		purchased += ctx.backpack.count() - potOfFlourCountBefore;

@@ -1,15 +1,8 @@
 package org.powerbot.iampwningyou;
 
-import org.powerbot.script.Area;
-import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 
 public class MoveToBurthorpeBank extends Task<ClientContext> {
-
-	public static final int POT_OF_FLOUR_ID = 1933;
-	public static final Tile upperLeft = new Tile(2879, 3551);
-	public static final Tile lowerRight= new Tile(2905, 3524);
-	public static final Area burthorpe = new Area(upperLeft, lowerRight);
 	
 	public MoveToBurthorpeBank(ClientContext ctx) {
 		super(ctx);
@@ -17,9 +10,9 @@ public class MoveToBurthorpeBank extends Task<ClientContext> {
 
 	@Override
 	public boolean activate() {
-		return burthorpe.contains(ctx.players.local().tile())
+		return Areas.BURTHORPE.contains(ctx.players.local().tile())
 				&& ctx.players.local().animation() == -1
-				&& ctx.backpack.select().id(POT_OF_FLOUR_ID).count() > 0
+				&& ctx.backpack.select().id(ItemIds.POT_OF_FLOUR).count() > 0
 				&& !ctx.bank.opened();
 	}
 

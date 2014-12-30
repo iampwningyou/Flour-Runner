@@ -24,7 +24,6 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	public static String state = "";
 	private static final int STORE_PRICE = 14;
 	private static int GE_PRICE = 0;
-	public static final int POT_OF_FLOUR_ID = 1933;
 
 	
 	@SuppressWarnings("unchecked")
@@ -39,7 +38,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 				new TeleportToBurthorpeToBank(ctx)));
 		
 		
-		GE_PRICE = GeItem.price(POT_OF_FLOUR_ID); 
+		GE_PRICE = GeItem.price(ItemIds.POT_OF_FLOUR); 
 	}
 
 	@Override
