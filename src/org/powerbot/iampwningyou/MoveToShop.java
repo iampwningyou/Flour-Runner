@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Condition;
+import org.powerbot.script.Random;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
@@ -15,6 +16,7 @@ public class MoveToShop extends Task<ClientContext> {
 	private static final Tile upperLeft = new Tile(3000, 3225);
 	private static final Tile lowerRight= new Tile(3018, 3199);
 	private static final Area port_sarim = new Area(upperLeft, lowerRight);
+	private static final Tile doorStep = new Tile(3017, 3206);
 	
 	public MoveToShop(ClientContext ctx) {
 		super(ctx);
@@ -31,6 +33,7 @@ public class MoveToShop extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		Npc wydin = ctx.npcs.select().id(WYDIN_ID).poll();
+		
 		if (ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())) {
 			ctx.movement.step(wydin);
 			wydin.interact(false, "Trade", "Wydin");
@@ -41,9 +44,9 @@ public class MoveToShop extends Task<ClientContext> {
 				}
 			}, 100, 20);
 		} else {
-			ctx.movement.step(new Tile(3017, 3206));
+			ctx.movement.step(doorStep);
 //			Helps with opening the door.
-			ctx.camera.angle(90);
+			ctx.camera.angle(90 + Random.nextInt(-5, 5));
 			GameObject door = ctx.objects.select().id(40108).nearest().poll();
 			door.interact(false, "Open", "Door");
 		}

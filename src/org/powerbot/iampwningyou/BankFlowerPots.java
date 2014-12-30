@@ -18,7 +18,6 @@ public class BankFlowerPots extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		if (ctx.backpack.select().id(POT_OF_FLOUR_ID).count() > 0) {
 			ctx.bank.deposit(POT_OF_FLOUR_ID, Amount.ALL);
 		} else {
