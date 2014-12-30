@@ -19,7 +19,7 @@ public class MoveToShop extends Task<ClientContext> {
 
 	@Override
 	public boolean activate() {
-		Tile outerUpperLeft = new Tile(3007, 3218);
+		Tile outerUpperLeft = new Tile(3000, 3225);
 		Tile outerLowerRight= new Tile(3018, 3199);
 		Area port_sarim = new Area(outerUpperLeft, outerLowerRight);
 		

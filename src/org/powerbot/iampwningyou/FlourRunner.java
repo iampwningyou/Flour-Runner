@@ -21,6 +21,7 @@ public class FlourRunner extends PollingScript<ClientContext> {
 				new BankFlowerPots(ctx),
 				new TeleportToPortSarimToBuy(ctx),
 				new MoveToShop(ctx), 
+				new Stop(ctx),	// strategically positioned
 				new BuyFlowerPots(ctx), 
 				new TeleportToBurthorpeToBank(ctx)));
 	}
