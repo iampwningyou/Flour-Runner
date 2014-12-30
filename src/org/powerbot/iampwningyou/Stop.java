@@ -11,11 +11,18 @@ public class Stop extends Task<ClientContext> {
 		super(ctx);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.powerbot.iampwningyou.Task#activate()
+	 * Stops when the shop runs out of flour pots.
+	 */
+	
 	@Override
-	public boolean activate() {
+	public boolean activate() {	
+		
 		if (ctx.widgets.component(1265, 5).visible()) {
-			Component potsOfFlour = ctx.widgets.component(1265, 26).component(0);
-			System.out.println(potsOfFlour.itemStackSize());
+			Component shopItemCounts = ctx.widgets.component(1265, 26); 
+			Component potsOfFlour = shopItemCounts.component(0);
 			return potsOfFlour.itemStackSize() == 0;
 		}
 		
@@ -25,10 +32,10 @@ public class Stop extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		ctx.game.logout(false);
+		
 		try {
 			ctx.bot().close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

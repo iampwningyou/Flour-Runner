@@ -11,18 +11,17 @@ import org.powerbot.script.rt6.Npc;
 
 public class MoveToShop extends Task<ClientContext> {
 	
-	private static final int WYDIN = 557;
+	private static final int WYDIN_ID = 557;
+	private static final Tile upperLeft = new Tile(3000, 3225);
+	private static final Tile lowerRight= new Tile(3018, 3199);
+	private static final Area port_sarim = new Area(upperLeft, lowerRight);
 	
 	public MoveToShop(ClientContext ctx) {
 		super(ctx);
 	}
 
 	@Override
-	public boolean activate() {
-		Tile outerUpperLeft = new Tile(3000, 3225);
-		Tile outerLowerRight= new Tile(3018, 3199);
-		Area port_sarim = new Area(outerUpperLeft, outerLowerRight);
-		
+	public boolean activate() {		
 		return port_sarim.contains(ctx.players.local().tile())
 				&& ctx.players.local().animation() == -1
 				&& ctx.backpack.select().count() != 28
@@ -31,7 +30,7 @@ public class MoveToShop extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
-		Npc wydin = ctx.npcs.select().id(WYDIN).poll();
+		Npc wydin = ctx.npcs.select().id(WYDIN_ID).poll();
 		if (ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())) {
 			ctx.movement.step(wydin);
 			wydin.interact(false, "Trade", "Wydin");
