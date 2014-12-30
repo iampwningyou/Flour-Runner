@@ -25,6 +25,8 @@ public class MoveToBurthorpeBank extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
+		FlourRunner.state = "Moving to bank";
+		
 		if (ctx.bank.inViewport()) {
 			ctx.bank.open();
 		} else {

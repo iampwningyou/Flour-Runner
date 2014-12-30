@@ -2,6 +2,7 @@ package org.powerbot.iampwningyou;
 
 import java.io.IOException;
 
+import org.powerbot.script.Condition;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;
 
@@ -31,6 +32,9 @@ public class Stop extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
+		FlourRunner.state = "Exiting script. Bought all pots";
+		Condition.sleep(3000);
+		
 		ctx.game.logout(false);
 		
 		try {

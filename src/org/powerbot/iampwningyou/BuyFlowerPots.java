@@ -21,6 +21,8 @@ public class BuyFlowerPots extends Task <ClientContext> {
 
 	@Override
 	public void execute() {
+		FlourRunner.state = "Buying Flower Pots";
+		
 		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
 		final int potOfFlourCountBefore = ctx.backpack.select().id(POT_OF_FLOUR_ID).count();
 		potOfFlour.interact(false, "Buy All", "Pot of flour");
@@ -30,6 +32,11 @@ public class BuyFlowerPots extends Task <ClientContext> {
 				return ctx.backpack.select().id(POT_OF_FLOUR_ID).count() > potOfFlourCountBefore;
 			}
 		}, 200, 10);
+		
+		
+		int purchased = FlourRunner.potsOfFloursPurchased;
+		purchased += ctx.backpack.count() - potOfFlourCountBefore;
+		FlourRunner.potsOfFloursPurchased = purchased;
 		
 		Component exit = ctx.widgets.component(1265, 88);
 		exit.click();

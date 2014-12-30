@@ -32,6 +32,8 @@ public class MoveToShop extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
+		FlourRunner.state = "Moving To Shop";
+		
 		Npc wydin = ctx.npcs.select().id(WYDIN_ID).poll();
 		
 		if (ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())) {
