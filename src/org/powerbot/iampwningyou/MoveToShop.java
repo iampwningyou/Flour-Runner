@@ -43,8 +43,9 @@ public class MoveToShop extends Task<ClientContext> {
 			}, 100, 20);
 		} else {
 			ctx.movement.step(new Tile(3017, 3206));
+//			Helps with opening the door.
+			ctx.camera.angle(90);
 			GameObject door = ctx.objects.select().id(40108).nearest().poll();
-			ctx.camera.turnTo(door);
 			door.interact(false, "Open", "Door");
 		}
 	}
