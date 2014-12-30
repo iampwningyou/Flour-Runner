@@ -16,7 +16,13 @@ public class FlourRunner extends PollingScript<ClientContext> {
 	
 	@SuppressWarnings("unchecked")
 	public FlourRunner() {
-		taskList.addAll(Arrays.asList(new MoveToBurthorpeBank(ctx), new BankFlowerPots(ctx)));
+		taskList.addAll(Arrays.asList(
+				new MoveToBurthorpeBank(ctx),
+				new BankFlowerPots(ctx),
+				new TeleportToPortSarimToBuy(ctx),
+				new MoveToShop(ctx), 
+				new BuyFlowerPots(ctx), 
+				new TeleportToBurthorpeToBank(ctx)));
 	}
 
 	@Override

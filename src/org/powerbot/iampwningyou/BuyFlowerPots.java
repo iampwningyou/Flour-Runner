@@ -1,23 +1,38 @@
 package org.powerbot.iampwningyou;
 
+import java.util.concurrent.Callable;
+
+import org.powerbot.script.Condition;
 import org.powerbot.script.rt6.ClientContext;
+import org.powerbot.script.rt6.Component;
 
 public class BuyFlowerPots extends Task <ClientContext> {
 
+	public static final int POT_OF_FLOUR_ID = 1933;
+	
 	public BuyFlowerPots(ClientContext ctx) {
 		super(ctx);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean activate() {
-		// TODO Auto-generated method stub
-		return false;
+		return ctx.widgets.component(1265, 5).visible();
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
+		final int potOfFlourCountBefore = ctx.backpack.select().id(POT_OF_FLOUR_ID).count();
+		potOfFlour.interact(false, "Buy All", "Pot of flour");
+		Condition.wait(new Callable<Boolean>() {
+			
+			public Boolean call() throws Exception {
+				return ctx.backpack.select().id(POT_OF_FLOUR_ID).count() > potOfFlourCountBefore;
+			}
+		}, 200, 10);
+		
+		Component exit = ctx.widgets.component(1265, 88);
+		exit.click();
 	}
 
 }
