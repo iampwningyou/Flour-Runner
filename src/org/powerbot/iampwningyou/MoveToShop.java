@@ -27,7 +27,7 @@ public class MoveToShop extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
-		FlourRunner.state = "Moving To Shop";
+		FlourRunner.task = "Moving To Shop";
 		
 		Npc wydin = ctx.npcs.select().id(NpcIds.WYDIN).poll();
 		

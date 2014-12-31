@@ -18,7 +18,7 @@ public class TeleportToPortSarimToBuy extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
-		FlourRunner.state = "Teleporting To Port Sarim";
+		FlourRunner.task = "Teleporting To Port Sarim";
 		Lodestones.PORT_SARIM.teleport(ctx);
 	}
 

@@ -18,7 +18,7 @@ public class TeleportToBurthorpeToBank extends Task <ClientContext>{
 
 	@Override
 	public void execute() {
-		FlourRunner.state = "Teleporting to Burthorpe";
+		FlourRunner.task = "Teleporting to Burthorpe";
 		Lodestones.BURTHORPE.teleport(ctx);
 	}
 

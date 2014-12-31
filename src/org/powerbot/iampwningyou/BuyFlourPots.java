@@ -6,9 +6,9 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;
 
-public class BuyFlowerPots extends Task <ClientContext> {
+public class BuyFlourPots extends Task <ClientContext> {
 	
-	public BuyFlowerPots(ClientContext ctx) {
+	public BuyFlourPots(ClientContext ctx) {
 		super(ctx);
 	}
 
@@ -19,14 +19,14 @@ public class BuyFlowerPots extends Task <ClientContext> {
 
 	@Override
 	public void execute() {
-		FlourRunner.state = "Buying Flower Pots";
+		FlourRunner.task = "Buying Flour Pots";
 		
 		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
 		ctx.backpack.select().id(ItemIds.POT_OF_FLOUR);
 		final int potOfFlourCountBefore = ctx.backpack.count();
 		potOfFlour.interact(false, "Buy All", "Pot of flour");
 		
-//		Wait until we've bought the pot of flowers.
+//		Wait until we've bought the pot of flours.
 		Condition.wait(new Callable<Boolean>() {
 			
 			public Boolean call() throws Exception {
@@ -38,6 +38,15 @@ public class BuyFlowerPots extends Task <ClientContext> {
 		int purchased = FlourRunner.potsOfFloursPurchased;
 		purchased += ctx.backpack.count() - potOfFlourCountBefore;
 		FlourRunner.potsOfFloursPurchased = purchased;
+		
+		if (ctx.widgets.component(1265, 5).visible()) {
+			Component shopItemCounts = ctx.widgets.component(1265, 26); 
+			Component potsOfFlour = shopItemCounts.component(0);
+			if (potsOfFlour.itemStackSize() == 0) {
+				FlourRunner.shouldStop = true;
+				FlourRunner.task = "Exiting Script. No more flour pots to buy.";
+			}
+		}
 		
 		Component exit = ctx.widgets.component(1265, 88);
 		exit.click();
