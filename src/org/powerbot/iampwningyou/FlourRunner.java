@@ -29,7 +29,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	private static final int STORE_PRICE = 14;
 	private static int POT_OF_FLOUR_GE_PRICE = 0;
 	private static int PASTRY_DOUGH_GE_PRICE = 0;
-	public static boolean shouldStop = false;
+	public static boolean shouldPause = false;
 	
 	@SuppressWarnings("unchecked")
 	public FlourRunner() {
@@ -56,26 +56,20 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 
 	@Override
 	public void poll() {
+		shouldPause = false;
+		
 		for (Task<ClientContext> task : taskList) {
 			if (task.activate()) task.execute();
 		}
 		
-		if (shouldStop) {
-			Condition.sleep(Random.nextInt(3000, 10000));
-			ctx.game.logout(false);
-			
-			try {
-				ctx.bot().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (shouldPause) {
+			ctx.controller.suspend();
 		}
 	}
 
-	private static final int STR_HEIGHT = 15;
+	private static final int STR_HEIGHT = 16;
 	private static final int STR_WIDTH = 6;
 	private List <String> paintStrs = new ArrayList<>();
-	private List <Color> paintColors = new ArrayList<>();
 	
 	@Override
 	public void repaint(Graphics g) {
@@ -91,27 +85,20 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 		int doughtProfitPerHourPerK = (int) ((doughProfit/hourRuntime) / 1000);
 		
 		paintStrs.clear();
-		paintColors.clear();
 		
 		paintStrs.add("iampwningyou's Flour Runner");
-		paintColors.add(Color.ORANGE);
 		
 		paintStrs.add("Runtime: " + secondsRuntime + "s");
-		paintColors.add(Color.RED);
 		
 		paintStrs.add("Pots of Flour Purchased: " + potsOfFloursPurchased);
 		paintStrs.add("Pots/Hour: " + flourPerHour);
 		paintStrs.add("Pots Profit/Hour: " + flourProfitPerHourPerK + "k");
-		for (int i = 0; i < 3; i++) paintColors.add(Color.WHITE);
-		
+
+		paintStrs.add("Pastry Dough Mixed: " + pastryDoughMixed);
 		paintStrs.add("Pastry Dough/Hour: " + doughPerHour);
 		paintStrs.add("Pastry Dough Profit/Hour: " + doughtProfitPerHourPerK + "k");
 		paintStrs.add("Current Task: " + task);
-		for (int i = 0; i < 3; i++) paintColors.add(Color.BLUE);
-		
-		paintStrs.add("Thanks for using this script!");
-		paintColors.add(Color.GREEN);
-		
+				
 //		Calculates the longest strlen for bg width calc
 		int longestStrLen = 0, strlen;
 		for (String s : paintStrs) {
@@ -127,8 +114,8 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 		g.fillRect(0, height, width, height);
 		
 //		Drawing the text
+		g.setColor(Color.WHITE);
 		for (int i = 0; i < paintStrs.size(); i++) {
-			g.setColor(paintColors.get(i));
 //			The i+1 is there because drawString's anchor is on the upper left
 			int labelHeight = height + (i+1)*STR_HEIGHT; 
 			g.drawString(paintStrs.get(i), 0, labelHeight);
@@ -137,12 +124,12 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	
 	@Override
 	public boolean isSuspended() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isStopping() {
-		return shouldStop;
+		return shouldPause;
 	}
 
 	@Override

@@ -43,8 +43,8 @@ public class BuyFlourPots extends Task <ClientContext> {
 			Component shopItemCounts = ctx.widgets.component(1265, 26); 
 			Component potsOfFlour = shopItemCounts.component(0);
 			if (potsOfFlour.itemStackSize() == 0) {
-				FlourRunner.shouldStop = true;
-				FlourRunner.task = "Exiting Script. No more flour pots to buy.";
+				FlourRunner.shouldPause = true;
+				FlourRunner.task = "No more flour pots to buy. Move to GE and resume to make pastry dough.";
 			}
 		}
 		

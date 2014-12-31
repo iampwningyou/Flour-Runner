@@ -41,11 +41,21 @@ public class MoveToShop extends Task<ClientContext> {
 				}
 			}, 100, 20);
 		} else {
-			ctx.movement.step(doorStep);
+			ctx.movement.step(doorStep);			
+			
+			Condition.wait(new Callable<Boolean>() {
+				
+				public Boolean call() throws Exception {
+					return ctx.players.local().animation() == -1;
+				}
+			}, 100, 50);
+			
 //			Helps with opening the door.
 			ctx.camera.angle(90 + Random.nextInt(-5, 5));
 			GameObject door = ctx.objects.select().id(40108).nearest().poll();
-			door.interact(false, "Open", "Door");
+			if (!ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())) {
+				door.interact(false, "Open", "Door");
+			}
 		}
 	}
 	

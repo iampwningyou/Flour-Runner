@@ -24,8 +24,8 @@ public class BankWithdrawFlourPots extends Task<ClientContext> {
 		FlourRunner.task = "Withdrawing pots of flours.";
 
 		if (ctx.bank.select().id(ItemIds.POT_OF_FLOUR).count() == 0) {
-			FlourRunner.task = "Exiting script. Not enough ingredients.";
-			FlourRunner.shouldStop = true;
+			FlourRunner.task = "Not enough ingredients to make more pastry dough.";
+			FlourRunner.shouldPause = true;
 		} else {
 			ctx.bank.withdraw(ItemIds.POT_OF_FLOUR, 14);
 		}
