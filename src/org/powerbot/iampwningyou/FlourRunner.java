@@ -19,7 +19,7 @@ import org.powerbot.script.rt6.GeItem;
 
 @Script.Manifest(name = "Flour Runner", description = "Buys flour pots and banks them.")
 
-public class FlourRunner extends PollingScript<ClientContext> implements PaintListener, Script.Controller{
+public class FlourRunner extends PollingScript<ClientContext> implements PaintListener {
 
 	private List <Task<ClientContext>> taskList = new ArrayList<Task<ClientContext>>();
 	
@@ -59,7 +59,6 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 
 	@Override
 	public void poll() {
-		System.out.println("Polling. Should pause: " + shouldPause);
 		for (Task<ClientContext> task : taskList) {
 			if (task.activate() && !shouldPause) task.execute();
 		}
@@ -92,7 +91,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	@Override
 	public void repaint(Graphics g) {
 //		Calculating values for status
-		double secondRuntime = this.getTotalRuntime()/1000;
+		double secondRuntime = ctx.controller.script().getTotalRuntime()/1000;
 		double minuteRuntime = secondRuntime/60;
 		double hourRuntime = minuteRuntime / 60;
 		int flourProfit = potsOfFloursPurchased * (POT_OF_FLOUR_GE_PRICE - STORE_PRICE);
@@ -158,26 +157,6 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 			int labelHeight = height + (i+1)*STR_HEIGHT; 
 			g.drawString(paintStrs.get(i), 0, labelHeight);
 		}
-	}
-	
-	@Override
-	public boolean isSuspended() {
-		return shouldPause;
-	}
-
-	@Override
-	public boolean isStopping() {
-		return false;
-	}
-
-	@Override
-	public boolean offer(Runnable arg0) {
-		return false;
-	}
-
-	@Override
-	public AbstractScript<ClientContext> script() {
-		return this;
 	}
 
 }
