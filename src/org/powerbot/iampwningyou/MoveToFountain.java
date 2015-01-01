@@ -7,6 +7,7 @@ import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;
 import org.powerbot.script.rt6.GameObject;
+import org.powerbot.script.rt6.Hud.Window;
 import org.powerbot.script.rt6.Item;
 
 public class MoveToFountain extends Task<ClientContext> {
@@ -47,6 +48,8 @@ public class MoveToFountain extends Task<ClientContext> {
 				return ctx.players.local().animation() == -1;
 			}
 		}, 100, 40);
+		
+		ctx.hud.open(Window.BACKPACK);
 		
 //		If the mixing window is not already open
 		Item potOfFlour = ctx.backpack.id(ItemIds.POT_OF_FLOUR).shuffle().poll();
