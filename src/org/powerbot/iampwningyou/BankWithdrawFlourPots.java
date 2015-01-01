@@ -3,6 +3,7 @@ package org.powerbot.iampwningyou;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
+import org.powerbot.script.rt6.Item;
 
 public class BankWithdrawFlourPots extends Task<ClientContext> {
 
@@ -23,16 +24,22 @@ public class BankWithdrawFlourPots extends Task<ClientContext> {
 	public void execute() {
 		FlourRunner.task = "Withdrawing pots of flours.";
 
-		if (ctx.bank.select().id(ItemIds.POT_OF_FLOUR).count() == 0) {
+		int index = ctx.bank.indexOf(ItemIds.POT_OF_FLOUR);
+		if (index == -1) {
 			FlourRunner.task = "Not enough ingredients to make more pastry dough.";
 			FlourRunner.shouldPause = true;
 		} else {
+//			Half inventory of flour pots for pastry dough makings
 			ctx.bank.withdraw(ItemIds.POT_OF_FLOUR, 14);
 		}
 
+//		Used for ETC
+		if (index != -1) {
+			FlourRunner.potOfFlourInBankCount = ctx.bank.itemAt(index).stackSize();
+		}
+		
 		Condition.sleep(Random.getDelay());
-	
-//		Half inventory of flour pots for pastry dough making
+		
 		ctx.bank.close();
 	}
 

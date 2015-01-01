@@ -46,6 +46,9 @@ public class BuyFlourPots extends Task <ClientContext> {
 				FlourRunner.shouldPause = true;
 				FlourRunner.task = "No more flour pots to buy. Move to GE and resume to make pastry dough.";
 			}
+			
+//			Used for ETC
+			FlourRunner.potsOfFloursInShopCount = potsOfFlour.itemStackSize();
 		}
 		
 		Component exit = ctx.widgets.component(1265, 88);

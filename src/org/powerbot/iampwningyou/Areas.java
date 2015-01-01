@@ -9,7 +9,7 @@ public final class Areas {
 			new Area(new Tile(2879, 3551), new Tile(2905, 3524));
 	
 	public static final Area PORT_SARIM = 
-			new Area(new Tile(3000, 3225), new Tile(3018, 3180));
+			new Area(new Tile(2980, 3225), new Tile(3030, 3180));
 	
 	public static final Area GRAND_EXCHANGE = 
 			new Area(new Tile(3139, 3515), new Tile(3197, 3470));

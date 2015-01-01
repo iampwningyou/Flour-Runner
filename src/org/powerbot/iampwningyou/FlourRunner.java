@@ -19,12 +19,15 @@ import org.powerbot.script.rt6.GeItem;
 
 @Script.Manifest(name = "Flour Runner", description = "Buys flour pots and banks them.")
 
-public class FlourRunner extends PollingScript<ClientContext> implements PaintListener, Script.Controller {
+public class FlourRunner extends PollingScript<ClientContext> implements PaintListener, Script.Controller{
 
 	private List <Task<ClientContext>> taskList = new ArrayList<Task<ClientContext>>();
 	
 	public static int potsOfFloursPurchased = 0;
+	public static int potsOfFloursInShopCount = 0;
 	public static int pastryDoughMixed = 0;
+	public static int potOfFlourInBankCount = 0;
+	
 	public static String task = "";
 	private static final int STORE_PRICE = 14;
 	private static int POT_OF_FLOUR_GE_PRICE = 0;
@@ -56,15 +59,30 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 
 	@Override
 	public void poll() {
-		shouldPause = false;
-		
+		System.out.println("Polling. Should pause: " + shouldPause);
 		for (Task<ClientContext> task : taskList) {
-			if (task.activate()) task.execute();
+			if (task.activate() && !shouldPause) task.execute();
 		}
 		
 		if (shouldPause) {
-			ctx.controller.suspend();
+			System.out.println("Pausing script.");
+			this.suspend();
+			return;
 		}
+	}
+	
+	@Override
+	public void suspend() {
+		System.out.println("Suspending the script.");
+		shouldPause = true;
+		super.suspend();
+	}
+	
+	@Override
+	public void resume() {
+		System.out.println("Resuming the script.");
+		shouldPause = false;
+		super.resume();
 	}
 
 	private static final int STR_HEIGHT = 16;
@@ -74,29 +92,49 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	@Override
 	public void repaint(Graphics g) {
 //		Calculating values for status
-		double secondsRuntime = this.getTotalRuntime()/1000;
-		double hourRuntime = secondsRuntime / 3600;
+		double secondRuntime = this.getTotalRuntime()/1000;
+		double minuteRuntime = secondRuntime/60;
+		double hourRuntime = minuteRuntime / 60;
 		int flourProfit = potsOfFloursPurchased * (POT_OF_FLOUR_GE_PRICE - STORE_PRICE);
 		int flourProfitPerHourPerK = (int) ((flourProfit/hourRuntime) / 1000);
+		int flourPerMinute = (int) (potsOfFloursPurchased/minuteRuntime);
 		int flourPerHour = (int) (potsOfFloursPurchased/hourRuntime);
-
+		
+		int flourETC = 0;
+		if (flourPerMinute > 0) {
+			 flourETC = potsOfFloursInShopCount / flourPerMinute;
+		}
+		
 		int doughProfit = pastryDoughMixed * PASTRY_DOUGH_GE_PRICE;
+		int doughPerMinute = (int) (pastryDoughMixed/minuteRuntime);
 		int doughPerHour = (int) (pastryDoughMixed/hourRuntime);
-		int doughtProfitPerHourPerK = (int) ((doughProfit/hourRuntime) / 1000);
+		int doughProfitPerHourPerK = (int) ((doughProfit/hourRuntime) / 1000);
+		
+		int doughETC = 0;
+		if (doughPerMinute> 0) {
+			doughETC = potOfFlourInBankCount / doughPerMinute;
+		}
 		
 		paintStrs.clear();
 		
 		paintStrs.add("iampwningyou's Flour Runner");
 		
-		paintStrs.add("Runtime: " + secondsRuntime + "s");
+		paintStrs.add("Runtime: " + secondRuntime + "s");
 		
-		paintStrs.add("Pots of Flour Purchased: " + potsOfFloursPurchased);
-		paintStrs.add("Pots/Hour: " + flourPerHour);
-		paintStrs.add("Pots Profit/Hour: " + flourProfitPerHourPerK + "k");
-
-		paintStrs.add("Pastry Dough Mixed: " + pastryDoughMixed);
-		paintStrs.add("Pastry Dough/Hour: " + doughPerHour);
-		paintStrs.add("Pastry Dough Profit/Hour: " + doughtProfitPerHourPerK + "k");
+		if (potsOfFloursPurchased > 0) {
+			paintStrs.add("Pots of Flour Purchased: " + potsOfFloursPurchased);
+			paintStrs.add("Pots/Hour: " + flourPerHour);
+			paintStrs.add("Pots Profit/Hour: " + flourProfitPerHourPerK + "k");
+			paintStrs.add("Buying Pots ETC: " + flourETC + "mins");
+		}
+		
+		if (pastryDoughMixed > 0) {
+			paintStrs.add("Pastry Dough Mixed: " + pastryDoughMixed);
+			paintStrs.add("Pastry Dough/Hour: " + doughPerHour);
+			paintStrs.add("Pastry Dough Profit/Hour: " + doughProfitPerHourPerK + "k");
+			paintStrs.add("Mixing ETC: " + doughETC + "mins");
+		}
+		
 		paintStrs.add("Current Task: " + task);
 				
 //		Calculates the longest strlen for bg width calc
@@ -124,12 +162,12 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	
 	@Override
 	public boolean isSuspended() {
-		return true;
+		return shouldPause;
 	}
 
 	@Override
 	public boolean isStopping() {
-		return shouldPause;
+		return false;
 	}
 
 	@Override

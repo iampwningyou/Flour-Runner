@@ -34,14 +34,15 @@ public class MoveToGEBank extends Task<ClientContext> {
 		}
 		
 		ctx.movement.step(ctx.bank.nearest().tile());
-		Condition.sleep(Random.getDelay());
+		
+		Condition.sleep(1000);
 		Condition.wait(new Callable<Boolean>() {
 			
 			@Override
 			public Boolean call() throws Exception {
 				return ctx.players.local().animation() == -1;
 			}
-		}, 100, 40);
+		}, 500, 40);
 		
 //		Grand exchange window is open
 		if (ctx.widgets.component(105, 87).component(1).visible()) {
