@@ -53,6 +53,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 				new BuyFlourPots(ctx), 
 				new TeleportToBurthorpeToBank(ctx)));
 		
+//		Making pastry dough requires 10 cooking.
 		if (ctx.skills.level(Constants.SKILLS_COOKING) >= 10) {
 			taskList.addAll(Arrays.asList(				
 					new MoveToGEBank(ctx),
@@ -92,11 +93,17 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 		shouldPause = false;
 		super.resume();
 	}
-
+//	An estimate of the height of a single character.
 	private static final int STR_HEIGHT = 16;
+//	An estimate of the width of a single character.
 	private static final int STR_WIDTH = 6;
+//	Will hold the strings to be displayed in the paint.
 	private List <String> paintStrs = new ArrayList<>();
-	
+
+	/*
+	 * 	This paint is dynamic to the number of strings displayed and the
+	 * 	length of the strings. 
+	 */
 	@Override
 	public void repaint(Graphics g) {
 //		Calculating values for status

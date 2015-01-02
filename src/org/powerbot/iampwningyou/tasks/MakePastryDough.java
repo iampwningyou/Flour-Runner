@@ -15,6 +15,9 @@ public class MakePastryDough extends Task<ClientContext>{
 		super(ctx);
 	}
 
+	/*
+	 * Activates when in GE and the mixing window is open.
+	 */
 	@Override
 	public boolean activate() {
 		return Areas.GRAND_EXCHANGE.contains(ctx.players.local().tile())

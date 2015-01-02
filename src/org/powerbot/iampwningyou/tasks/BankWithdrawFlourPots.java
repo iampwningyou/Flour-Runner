@@ -28,16 +28,15 @@ public class BankWithdrawFlourPots extends Task<ClientContext> {
 		FlourRunner.task = "Withdrawing pots of flours.";
 
 		int index = ctx.bank.indexOf(ItemIds.POT_OF_FLOUR);
+//		-1 means not found in bank.
 		if (index == -1) {
 			FlourRunner.task = "Not enough ingredients to make more pastry dough.";
 			FlourRunner.shouldPause = true;
 		} else {
 //			Half inventory of flour pots for pastry dough makings
 			ctx.bank.withdraw(ItemIds.POT_OF_FLOUR, 14);
-		}
-
-//		Used for ETC
-		if (index != -1) {
+			
+//			Used for ETC
 			FlourRunner.potOfFlourInBankCount = ctx.bank.itemAt(index).stackSize();
 		}
 		

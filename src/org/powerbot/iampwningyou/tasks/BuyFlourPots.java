@@ -14,6 +14,7 @@ public class BuyFlourPots extends Task <ClientContext> {
 		super(ctx);
 	}
 
+//	When the window for Wydin's store is open.
 	@Override
 	public boolean activate() {
 		return ctx.widgets.component(1265, 5).visible();
@@ -24,9 +25,11 @@ public class BuyFlourPots extends Task <ClientContext> {
 		FlourRunner.task = "Buying Flour Pots";
 		
 		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
+		potOfFlour.interact(false, "Buy All", "Pot of flour");
+		
+//		Tracking number of flours purchased.
 		ctx.backpack.select().id(ItemIds.POT_OF_FLOUR);
 		final int potOfFlourCountBefore = ctx.backpack.count();
-		potOfFlour.interact(false, "Buy All", "Pot of flour");
 		
 //		Wait until we've bought the pot of flours.
 		Condition.wait(new Callable<Boolean>() {
@@ -37,13 +40,17 @@ public class BuyFlourPots extends Task <ClientContext> {
 			}
 		}, 200, 10);
 		
+//		Tracking number of flours purchased.
 		int purchased = FlourRunner.potsOfFloursPurchased;
 		purchased += ctx.backpack.count() - potOfFlourCountBefore;
 		FlourRunner.potsOfFloursPurchased = purchased;
 		
+//		Wydin's shop window is still open.
 		if (ctx.widgets.component(1265, 5).visible()) {
 			Component shopItemCounts = ctx.widgets.component(1265, 26); 
 			Component potsOfFlour = shopItemCounts.component(0);
+			
+//			Checks the number of pot of flours left.
 			if (potsOfFlour.itemStackSize() == 0) {
 				FlourRunner.shouldPause = true;
 				FlourRunner.task = "No more flour pots to buy. Move to GE and resume to make pastry dough.";
