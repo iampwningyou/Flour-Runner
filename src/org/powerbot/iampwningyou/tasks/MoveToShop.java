@@ -1,7 +1,10 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.tasks;
 
 import java.util.concurrent.Callable;
 
+import org.powerbot.iampwningyou.FlourRunner;
+import org.powerbot.iampwningyou.resources.Areas;
+import org.powerbot.iampwningyou.resources.ids.NpcIds;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.Tile;

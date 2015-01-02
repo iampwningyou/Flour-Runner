@@ -1,7 +1,9 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.tasks;
 
 import java.util.concurrent.Callable;
 
+import org.powerbot.iampwningyou.FlourRunner;
+import org.powerbot.iampwningyou.resources.ids.ItemIds;
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;

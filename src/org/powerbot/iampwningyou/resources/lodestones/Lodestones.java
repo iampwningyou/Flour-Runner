@@ -1,4 +1,4 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.resources.lodestones;
 
 /*
  * Credits to Artificial
@@ -8,6 +8,7 @@ package org.powerbot.iampwningyou;
 import java.awt.*;
 import java.util.concurrent.Callable;
 
+import org.powerbot.iampwningyou.resources.Timer;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.Tile;

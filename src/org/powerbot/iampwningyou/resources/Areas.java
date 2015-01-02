@@ -1,4 +1,4 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.resources;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Tile;
@@ -15,7 +15,7 @@ public final class Areas {
 			new Area(new Tile(3139, 3515), new Tile(3197, 3470));
 	
 	private Areas() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

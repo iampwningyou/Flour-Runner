@@ -2,22 +2,32 @@ package org.powerbot.iampwningyou;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.powerbot.script.AbstractScript;
-import org.powerbot.script.Condition;
+import org.powerbot.iampwningyou.resources.ids.ItemIds;
+import org.powerbot.iampwningyou.tasks.BankDepositEverything;
+import org.powerbot.iampwningyou.tasks.BankDepositFlourPots;
+import org.powerbot.iampwningyou.tasks.BankWithdrawFlourPots;
+import org.powerbot.iampwningyou.tasks.BuyFlourPots;
+import org.powerbot.iampwningyou.tasks.MakePastryDough;
+import org.powerbot.iampwningyou.tasks.MoveToBurthorpeBank;
+import org.powerbot.iampwningyou.tasks.MoveToFountain;
+import org.powerbot.iampwningyou.tasks.MoveToGEBank;
+import org.powerbot.iampwningyou.tasks.MoveToShop;
+import org.powerbot.iampwningyou.tasks.Task;
+import org.powerbot.iampwningyou.tasks.TeleportToBurthorpeToBank;
+import org.powerbot.iampwningyou.tasks.TeleportToPortSarimToBuy;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
-import org.powerbot.script.Random;
 import org.powerbot.script.Script;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Constants;
 import org.powerbot.script.rt6.GeItem;
 
-@Script.Manifest(name = "Flour Runner", description = "Buys flour pots and banks them.")
+@Script.Manifest(name = "Flour Runner", description = "Banks pot of flours "
+		+ "bought from Wydin and makes pastry dough.")
 
 public class FlourRunner extends PollingScript<ClientContext> implements PaintListener {
 
@@ -34,7 +44,6 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	private static int PASTRY_DOUGH_GE_PRICE = 0;
 	public static boolean shouldPause = false;
 	
-	@SuppressWarnings("unchecked")
 	public FlourRunner() {
 		taskList.addAll(Arrays.asList(
 				new MoveToBurthorpeBank(ctx),

@@ -1,5 +1,8 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.tasks;
 
+import org.powerbot.iampwningyou.FlourRunner;
+import org.powerbot.iampwningyou.resources.Areas;
+import org.powerbot.iampwningyou.resources.ids.ItemIds;
 import org.powerbot.script.rt6.ClientContext;
 
 public class MoveToBurthorpeBank extends Task<ClientContext> {

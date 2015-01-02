@@ -1,4 +1,4 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.tasks;
 
 /*
  * Credits to Coma for Task Pattern

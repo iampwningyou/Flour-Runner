@@ -1,4 +1,4 @@
-package org.powerbot.iampwningyou;
+package org.powerbot.iampwningyou.resources.ids;
 
 public final class ItemIds {
 
