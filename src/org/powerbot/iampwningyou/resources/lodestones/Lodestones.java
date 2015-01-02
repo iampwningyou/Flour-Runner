@@ -129,6 +129,8 @@ public enum Lodestones {
 				return ctx.varpbits.varpbit(2253, 0xfffff) == 190;
 			case ASHDALE:
 				return ctx.varpbits.varpbit(4390, 0, 0x7f) == 100;
+		default:
+			break;
 		}
 		return ctx.varpbits.varpbit(3, this.shift, 1) == 1;
 	}

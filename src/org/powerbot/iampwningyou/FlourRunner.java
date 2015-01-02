@@ -19,6 +19,7 @@ import org.powerbot.iampwningyou.tasks.MoveToShop;
 import org.powerbot.iampwningyou.tasks.Task;
 import org.powerbot.iampwningyou.tasks.TeleportToBurthorpeToBank;
 import org.powerbot.iampwningyou.tasks.TeleportToPortSarimToBuy;
+import org.powerbot.script.Condition;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
 import org.powerbot.script.Script;
@@ -42,7 +43,6 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	private static final int STORE_PRICE = 14;
 	private static int POT_OF_FLOUR_GE_PRICE = 0;
 	private static int PASTRY_DOUGH_GE_PRICE = 0;
-	public static boolean shouldPause = false;
 	
 	public FlourRunner() {
 		taskList.addAll(Arrays.asList(
@@ -70,29 +70,15 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	@Override
 	public void poll() {
 		for (Task<ClientContext> task : taskList) {
-			if (task.activate() && !shouldPause) task.execute();
-		}
-		
-		if (shouldPause) {
-			System.out.println("Pausing script.");
-			this.suspend();
-			return;
+			if (task.activate()) task.execute();
 		}
 	}
-	
-	@Override
-	public void suspend() {
-		System.out.println("Suspending the script.");
-		shouldPause = true;
-		super.suspend();
+
+	public static void stop(ClientContext _ctx) {
+		Condition.sleep(10000);
+		_ctx.controller.stop();
 	}
 	
-	@Override
-	public void resume() {
-		System.out.println("Resuming the script.");
-		shouldPause = false;
-		super.resume();
-	}
 //	An estimate of the height of a single character.
 	private static final int STR_HEIGHT = 16;
 //	An estimate of the width of a single character.

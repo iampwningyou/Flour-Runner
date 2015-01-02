@@ -6,7 +6,6 @@ import org.powerbot.iampwningyou.resources.ids.ItemIds;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
-import org.powerbot.script.rt6.Item;
 
 public class BankWithdrawFlourPots extends Task<ClientContext> {
 
@@ -31,7 +30,7 @@ public class BankWithdrawFlourPots extends Task<ClientContext> {
 //		-1 means not found in bank.
 		if (index == -1) {
 			FlourRunner.task = "Not enough ingredients to make more pastry dough.";
-			FlourRunner.shouldPause = true;
+			FlourRunner.stop(ctx);
 		} else {
 //			Half inventory of flour pots for pastry dough makings
 			ctx.bank.withdraw(ItemIds.POT_OF_FLOUR, 14);

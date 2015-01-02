@@ -52,8 +52,8 @@ public class BuyFlourPots extends Task <ClientContext> {
 			
 //			Checks the number of pot of flours left.
 			if (potsOfFlour.itemStackSize() == 0) {
-				FlourRunner.shouldPause = true;
 				FlourRunner.task = "No more flour pots to buy. Move to GE and resume to make pastry dough.";
+				FlourRunner.stop(ctx);
 			}
 			
 //			Used for ETC
