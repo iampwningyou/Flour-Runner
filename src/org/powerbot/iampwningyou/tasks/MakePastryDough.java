@@ -39,7 +39,6 @@ public class MakePastryDough extends Task<ClientContext>{
 		Condition.sleep(Random.nextInt(500, 1500));
 		Condition.wait(new Callable<Boolean>() {
 			
-			@Override
 			public Boolean call() throws Exception {
 				return !ctx.widgets.component(1251, 0).component(0).visible();
 			}

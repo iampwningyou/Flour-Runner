@@ -41,7 +41,6 @@ public class MoveToGEBank extends Task<ClientContext> {
 		Condition.sleep(1000);
 		Condition.wait(new Callable<Boolean>() {
 			
-			@Override
 			public Boolean call() throws Exception {
 				return ctx.players.local().animation() == -1;
 			}
@@ -54,7 +53,6 @@ public class MoveToGEBank extends Task<ClientContext> {
 		
 		Condition.wait(new Callable<Boolean>() {
 			
-			@Override
 			public Boolean call() throws Exception {
 				return !ctx.widgets.component(105, 87).component(1).visible();
 			}

@@ -46,7 +46,6 @@ public class MoveToFountain extends Task<ClientContext> {
 		Condition.sleep(Random.nextInt(200, 500));
 		Condition.wait(new Callable<Boolean>() {
 			
-			@Override
 			public Boolean call() throws Exception {
 				return ctx.players.local().animation() == -1;
 			}
@@ -61,7 +60,6 @@ public class MoveToFountain extends Task<ClientContext> {
 		
 		Condition.wait(new Callable<Boolean>() {
 			
-			@Override
 			public Boolean call() throws Exception {
 				return ctx.widgets.component(1371, 0).visible();
 			}

@@ -14,8 +14,8 @@ public class BankDepositEverything extends Task<ClientContext> {
 	@Override
 	public boolean activate() {
 		return Areas.GRAND_EXCHANGE.contains(ctx.players.local().tile())
-				&& ctx.backpack.select().id(ItemIds.PASTRY_DOUGH).count() > 0
-				&& ctx.backpack.select().id(ItemIds.EMPTY_POT).count() > 0
+				&& (ctx.backpack.select().count() == 28
+				|| ctx.backpack.id(ItemIds.POT_OF_FLOUR).count() == 0)
 				&& ctx.bank.opened();
 	}
 

@@ -28,7 +28,7 @@ import org.powerbot.script.rt6.Constants;
 import org.powerbot.script.rt6.GeItem;
 
 @Script.Manifest(name = "Flour Runner", description = "Banks pot of flours "
-		+ "bought from Wydin and makes pastry dough.")
+		+ "bought from Wydin and makes pastry dough.", properties="client=6")
 
 public class FlourRunner extends PollingScript<ClientContext> implements PaintListener {
 
@@ -84,13 +84,12 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 //	An estimate of the width of a single character.
 	private static final int STR_WIDTH = 6;
 //	Will hold the strings to be displayed in the paint.
-	private List <String> paintStrs = new ArrayList<>();
+	private List <String> paintStrs = new ArrayList<String>();
 
 	/*
 	 * 	This paint is dynamic to the number of strings displayed and the
 	 * 	length of the strings. 
 	 */
-	@Override
 	public void repaint(Graphics g) {
 //		Calculating values for status
 		double secondRuntime = ctx.controller.script().getTotalRuntime()/1000;
