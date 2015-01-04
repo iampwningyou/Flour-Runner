@@ -56,7 +56,8 @@ public class MoveToShop extends Task<ClientContext> {
 //			Helps with opening the door.
 			ctx.camera.angle(90 + Random.nextInt(-5, 5));
 			GameObject door = ctx.objects.select().id(40108).nearest().poll();
-			if (!ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())) {
+			if (!ctx.movement.reachable(ctx.players.local().tile(), wydin.tile())
+					&& doorStep.compareTo(door.tile()) == 0) {
 				door.interact(false, "Open", "Door");
 			}
 		}

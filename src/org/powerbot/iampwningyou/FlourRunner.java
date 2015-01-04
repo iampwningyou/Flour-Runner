@@ -82,7 +82,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 //	An estimate of the height of a single character.
 	private static final int STR_HEIGHT = 16;
 //	An estimate of the width of a single character.
-	private static final int STR_WIDTH = 6;
+	private static final int STR_WIDTH = 7;
 //	Will hold the strings to be displayed in the paint.
 	private List <String> paintStrs = new ArrayList<String>();
 
