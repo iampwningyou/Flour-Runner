@@ -28,7 +28,7 @@ import org.powerbot.script.rt6.Constants;
 import org.powerbot.script.rt6.GeItem;
 
 @Script.Manifest(name = "Flour Runner", description = "Banks pot of flours "
-		+ "bought from Wydin and makes pastry dough.", properties="client=6, topic=1239912")
+		+ "bought from Wydin and makes pastry dough.", properties="client=6;topic=1239912")
 
 public class FlourRunner extends PollingScript<ClientContext> implements PaintListener {
 
