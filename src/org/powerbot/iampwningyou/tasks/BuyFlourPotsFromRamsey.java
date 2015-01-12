@@ -4,27 +4,42 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.iampwningyou.FlourRunner;
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
+import org.powerbot.iampwningyou.resources.ids.ShopId;
 import org.powerbot.script.Condition;
+import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Component;
 
-public class BuyFlourPots extends Task <ClientContext> {
+public class BuyFlourPotsFromRamsey extends Task <ClientContext> {
 	
-	public BuyFlourPots(ClientContext ctx) {
+	public BuyFlourPotsFromRamsey(ClientContext ctx) {
 		super(ctx);
 	}
 
-//	When the window for Wydin's store is open.
+//	When the window for Ramsey's store is open.
 	@Override
 	public boolean activate() {
-		return ctx.widgets.component(1265, 5).visible();
+		return FlourRunner.currentShopBuyingFrom == ShopId.RAMSEY
+				&& ctx.widgets.component(1265, 5).visible();
 	}
 
 	@Override
 	public void execute() {
-		FlourRunner.task = "Buying Flour Pots";
+		FlourRunner.task = "Buying Flour Pots From Ramsey";
 		
-		Component potOfFlour = ctx.widgets.component(1265, 20).component(0);
+//		Widget-1265
+		
+//		Pot of flour is 26-9
+		Component visibleWindow = ctx.widgets.component(1265, 56);
+		Component shopItemCounts = ctx.widgets.component(1265, 26);
+		
+		if (!visibleWindow.contains(shopItemCounts.centerPoint())) {
+//			Press component 50 to get flour view easily.
+			ctx.widgets.component(1265, 50).click();
+			Condition.sleep(Random.getDelay());
+		}
+
+		Component potOfFlour = ctx.widgets.component(1265, 20).component(9);
 		potOfFlour.interact(false, "Buy All", "Pot of flour");
 		
 //		Tracking number of flours purchased.
@@ -45,10 +60,9 @@ public class BuyFlourPots extends Task <ClientContext> {
 		purchased += ctx.backpack.count() - potOfFlourCountBefore;
 		FlourRunner.potsOfFloursPurchased = purchased;
 		
-//		Wydin's shop window is still open.
+//		Ramsey's shop window is still open.
 		if (ctx.widgets.component(1265, 5).visible()) {
-			Component shopItemCounts = ctx.widgets.component(1265, 26); 
-			Component potsOfFlour = shopItemCounts.component(0);
+			Component potsOfFlour = shopItemCounts.component(9);
 			
 //			Checks the number of pot of flours left.
 			if (potsOfFlour.itemStackSize() == 0) {

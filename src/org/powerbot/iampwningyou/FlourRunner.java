@@ -7,18 +7,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
+import org.powerbot.iampwningyou.resources.ids.ShopId;
 import org.powerbot.iampwningyou.tasks.BankDepositEverything;
 import org.powerbot.iampwningyou.tasks.BankDepositFlourPots;
 import org.powerbot.iampwningyou.tasks.BankWithdrawFlourPots;
-import org.powerbot.iampwningyou.tasks.BuyFlourPots;
+import org.powerbot.iampwningyou.tasks.BuyFlourPotsFromRamsey;
+import org.powerbot.iampwningyou.tasks.BuyFlourPotsFromWydin;
 import org.powerbot.iampwningyou.tasks.MakePastryDough;
 import org.powerbot.iampwningyou.tasks.MoveToBurthorpeBank;
 import org.powerbot.iampwningyou.tasks.MoveToFountain;
 import org.powerbot.iampwningyou.tasks.MoveToGEBank;
-import org.powerbot.iampwningyou.tasks.MoveToShop;
+import org.powerbot.iampwningyou.tasks.MoveToRamseyShop;
+import org.powerbot.iampwningyou.tasks.MoveToWydinShop;
 import org.powerbot.iampwningyou.tasks.Task;
 import org.powerbot.iampwningyou.tasks.TeleportToBurthorpeToBank;
 import org.powerbot.iampwningyou.tasks.TeleportToPortSarimToBuy;
+import org.powerbot.iampwningyou.tasks.TeleportToTaverlyToBuy;
 import org.powerbot.script.Condition;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
@@ -38,6 +42,7 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 	public static int potsOfFloursInShopCount = 0;
 	public static int pastryDoughMixed = 0;
 	public static int potOfFlourInBankCount = 0;
+	public static ShopId currentShopBuyingFrom;
 	
 	public static String task = "";
 	private static final int STORE_PRICE = 14;
@@ -49,9 +54,12 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 				new MoveToBurthorpeBank(ctx),
 				new BankDepositFlourPots(ctx),
 				new TeleportToPortSarimToBuy(ctx),
-				new MoveToShop(ctx), 
-				new BuyFlourPots(ctx), 
-				new TeleportToBurthorpeToBank(ctx)));
+				new MoveToWydinShop(ctx), 
+				new BuyFlourPotsFromWydin(ctx), 
+				new TeleportToBurthorpeToBank(ctx),
+				new BuyFlourPotsFromRamsey(ctx),
+				new MoveToRamseyShop(ctx),
+				new TeleportToTaverlyToBuy(ctx)));
 		
 //		Making pastry dough requires 10 cooking.
 		if (ctx.skills.level(Constants.SKILLS_COOKING) >= 10) {
@@ -65,6 +73,8 @@ public class FlourRunner extends PollingScript<ClientContext> implements PaintLi
 		
 		POT_OF_FLOUR_GE_PRICE = GeItem.price(ItemIds.POT_OF_FLOUR);
 		PASTRY_DOUGH_GE_PRICE = GeItem.price(ItemIds.PASTRY_DOUGH);
+		
+		currentShopBuyingFrom = ShopId.WYDIN;
 	}
 
 	@Override
