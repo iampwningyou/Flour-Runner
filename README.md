@@ -1,9 +1,9 @@
 Flour-Runner
 ============
 
-Buys flour pots in Port Sarim and banks them in Burtherope.
-
-If cooking level is over 9, it can also make pastry doughs in the GE.
+* Buys flour pots in Port Sarim and Taverly.
+* Banks them in Burtherope.
+* Makes pastry dough in the Grand Exchange.
 
 Progress Pictures:  
 ![flourrunner1](https://cloud.githubusercontent.com/assets/10336705/5594221/60bb5a52-91f6-11e4-8448-238b7c84c2b0.PNG)
