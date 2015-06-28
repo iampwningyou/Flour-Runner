@@ -42,7 +42,7 @@ public enum Lodestones {
 	PRIFDDINAS(new Tile(2206, 3362, 1), 24, "{VK_ALT down}{VK_P}{VK_ALT up}"),
 	BANDIT_CAMP(new Tile(3214, 2954, 0), -12, "{VK_ALT down}{VK_B}{VK_ALT up}");
 	private static final int TELEPORT_INTERFACE_WIDGET = 1092;
-	private static final int TELEPORT_INTERFACE_COMPONENT = 3;
+	private static final int TELEPORT_INTERFACE_COMPONENT = 0;
 	private static final int MINIMAP_WIDGET = 1465;
 	private static final int OPEN_INTERFACE_COMPONENT = 51;
 	private final int widgetIndex;
@@ -54,7 +54,7 @@ public enum Lodestones {
 
 
 	private Lodestones(final Tile location, final int shift, final String key) {
-		this.widgetIndex = 15 + ordinal();
+		this.widgetIndex = 17 + ordinal();
 		this.shift = shift;
 		this.location = location;
 		this.key = key;
@@ -82,20 +82,27 @@ public enum Lodestones {
 	}
 
 	public boolean teleport(final ClientContext ctx, boolean key) {
+		System.out.println("Teleporting...");
 		final TileMatrix lodestoneMatrix = location.matrix(ctx);
 		if (lodestoneMatrix.onMap() && lodestoneMatrix.reachable()) {
+			System.out.println("Moving to lodestone...");
 			ctx.movement.step(lodestoneMatrix);
 		} else if (!teleporting(ctx) || wrongDest) {
+			System.out.println("Opening teleport interface...");
 			if (componentPresent(ctx.widgets.component(TELEPORT_INTERFACE_WIDGET, TELEPORT_INTERFACE_COMPONENT))) {
+				System.out.println("About to click or send key...");
 				final Component dest = ctx.widgets.component(1092, this.widgetIndex());
 				if (key && ctx.input.send(this.key) || ctx.input.click(dest.nextPoint(), true) && clickedCorrect(ctx, dest)) {
+					System.out.println("Sent key...");
 					wrongDest = false;
 					Condition.wait(new Callable<Boolean>() {
 						public Boolean call() throws Exception {
+							System.out.println("Waiting for teleporting...");
 							return teleporting(ctx);
 						}
 					}, 100, 25);
 				} else {
+					System.out.println("Wrong destination...");
 					wrongDest = true;
 				}
 			} else {
