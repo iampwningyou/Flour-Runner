@@ -120,7 +120,7 @@ public enum Lodestones {
 
 	
 	public boolean teleport(final ClientContext ctx) {
-		return teleport(ctx, false);
+		return teleport(ctx, true);
 	}
 
 	private boolean clickedCorrect(ClientContext ctx, Component correct) {
